@@ -4,13 +4,12 @@ Cloning Youtube with Vanilla and Node.js
 
 ## We should make :
 
-- [ ] home
 - [x] join
 - [x] login
 - [x] search
 - [ ] user detail
-- [ ] edit profile
-- [ ] change password
-- [ ] upload
+- [x] edit profile
+- [x] change password
+- [x] upload
 - [ ] video detail
-- [ ] edit video
+- [x] edit video

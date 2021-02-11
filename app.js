@@ -15,11 +15,8 @@ app.use(helmet());
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'", "http://*.fontawesome.com"],
-      scriptSrc: ["'self'", "http://*.fontawesome.com"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      upgradeInsecureRequests: [],
-    },
+      "default-src": ["'self'", "'unsafe-inline'", "*.com", "*.org"]
+    }
   })
 );
 app.use(cookieParser());

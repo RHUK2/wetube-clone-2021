@@ -4,7 +4,6 @@ import {
   editVideo,
   upload,
   videoDetail,
-  videos,
 } from "../controllers/videoController";
 import routes from "../routes";
 
