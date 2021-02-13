@@ -10,7 +10,6 @@ import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
 const app = express();
 
-app.set("view engine", "pug");
 app.use(helmet());
 app.use(
   helmet.contentSecurityPolicy({
@@ -19,6 +18,8 @@ app.use(
     }
   })
 );
+app.set("view engine", "pug");
+app.use("/uploads", express.static("uploads"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
