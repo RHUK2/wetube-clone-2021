@@ -1,6 +1,5 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const regeneratorRuntime = require('regenerator-runtime');
 
 const MODE = process.env.WEBPACK_ENV;
 const ENTRY_FILE = path.resolve(__dirname, 'assets', 'js', 'main.js');
@@ -10,7 +9,6 @@ const config = {
   plugins: [new MiniCssExtractPlugin({ filename: 'styles.css' })],
   entry: ENTRY_FILE,
   mode: MODE,
-  // devtool: 'source-map',
   module: {
     rules: [
       {
