@@ -23,27 +23,27 @@ export const postJoin = async (req, res, next) => {
       next();
     } catch (err) {
       console.log(err);
+      res.redirect(routes.home);
     }
     //  To Do: Log user in
-    res.redirect(routes.home);
   }
 };
 
 export const getLogin = (req, res) => {
   res.render('login', { pageTitle: 'Login' });
 };
-// 'local'은 우리가 설치해준 '전략'을 의미
+// 'local'은 우리가 설치해준 '전략'을 의미, 로그인 시켜주는 역할, req.user 설정
 export const postLogin = passport.authenticate('local', {
   failureRedirect: routes.login,
   successRedirect: routes.home
 });
-
+// githbu
 export const githubLogin = passport.authenticate('github');
-
 export const githubLoginCallback = async (_, __, profile, cb) => {
   const {
-    _json: { id, avatar_url, name, email }
+    _json: { id, avatar_url: avatarUrl, name, email }
   } = profile;
+  console.log(name, email);
   try {
     const user = await User.findOne({ email });
     if (user) {
@@ -52,18 +52,48 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
       return cb(null, user);
     }
     const newUser = await User.create({
-      email,
       name,
+      email,
       githubId: id,
-      avatarUrl: avatar_url
+      avatarUrl
     });
     return cb(null, newUser);
   } catch (err) {
     return cb(err);
   }
 };
-
 export const postGithubLogIn = (req, res) => {
+  res.redirect(routes.home);
+};
+// kakao
+export const kakaoLogin = passport.authenticate('kakao');
+export const kakaoLoginCallback = async (_, __, profile, cb) => {
+  const {
+    id,
+    username,
+    _json: {
+      kakao_account: { email },
+      properties: { profile_image: profileImage }
+    }
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.kakaoId = id;
+      user.save();
+      return cb(null, user);
+    }
+    const newUser = await User.create({
+      name: username,
+      email,
+      avatarUrl: profileImage
+    });
+    return cb(null, newUser);
+  } catch (err) {
+    return cb(err);
+  }
+};
+export const postKakaoLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
@@ -72,9 +102,22 @@ export const logout = (req, res) => {
   res.redirect(routes.home);
 };
 
-export const userDetail = (req, res) =>
-  res.render('userDetail', { pageTitle: 'User Detail' });
-export const editProfile = (req, res) =>
+export const getMe = (req, res) => {
+  res.render('userDetail', { pageTitle: 'User Detail', user: req.user });
+};
+
+export const userDetail = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+  try {
+    const user = await User.findById(id);
+    res.render('userDetail', { pageTitle: 'User Detail', user });
+  } catch (err) {
+    res.redirect(routes.home);
+  }
+};
+export const getEditProfile = (req, res) =>
   res.render('editProfile', { pageTitle: 'Edit Profile' });
 export const changePassword = (req, res) =>
   res.render('changePassword', { pageTitle: 'Change Password' });

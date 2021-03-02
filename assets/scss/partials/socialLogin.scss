@@ -15,9 +15,6 @@
     span {
       margin-right: 10px;
       font-size: 20px;
-      i {
-        margin-right: 15px;
-      }
     }
   }
   &--github {
@@ -28,10 +25,10 @@
     }
   }
   &--facebook {
-    background-color: #3a5998;
-    color: white;
+    background-color: #ffeb3b;
+    color: #3e2723;
     a:visited {
-      color: white;
+      color: #3e2723;
     }
   }
 }
