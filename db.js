@@ -1,14 +1,15 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
+// dotenv.config();
 
-dotenv.config();
+import mongooses from 'mongoose';
 
-mongoose.connect(process.env.MONGO_URL, {
+mongooses.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
+  useCreateIndex: true,
   useUnifiedTopology: true
 });
 
-const db = mongoose.connection;
+const db = mongooses.connection;
 
 const handleOpen = () => {
   console.log('✔ Conncected to DB');
