@@ -1,4 +1,5 @@
 import passport from 'passport';
+import { restart } from 'nodemon';
 import routes from '../routes';
 import User from '../models/User';
 
@@ -48,7 +49,7 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
     const user = await User.findOne({ email });
     if (user) {
       user.githubId = id;
-      user.save();
+      await user.save();
       return cb(null, user);
     }
     const newUser = await User.create({
@@ -80,7 +81,7 @@ export const kakaoLoginCallback = async (_, __, profile, cb) => {
     const user = await User.findOne({ email });
     if (user) {
       user.kakaoId = id;
-      user.save();
+      await user.save();
       return cb(null, user);
     }
     const newUser = await User.create({
@@ -119,5 +120,38 @@ export const userDetail = async (req, res) => {
 };
 export const getEditProfile = (req, res) =>
   res.render('editProfile', { pageTitle: 'Edit Profile' });
-export const changePassword = (req, res) =>
+export const postEditProfile = async (req, res) => {
+  const {
+    body: { name, email },
+    file
+  } = req;
+  try {
+    await User.findByIdAndUpdate(req.user.id, {
+      name,
+      email,
+      avatarUrl: file ? file.path : req.user.avatarUrl
+    });
+    res.redirect(routes.me);
+  } catch (err) {
+    res.render('editProfile', { pageTitle: 'Edit Profile' });
+  }
+};
+export const getChangePassword = (req, res) =>
   res.render('changePassword', { pageTitle: 'Change Password' });
+export const postChangePassword = async (req, res) => {
+  const {
+    body: { oldPassword, newPassword, newPassword1 }
+  } = req;
+  try {
+    if (newPassword !== newPassword1) {
+      res.status(400);
+      res.redirect(`/users${routes.changePassword}`);
+      return;
+    }
+    await req.user.changePassword(oldPassword, newPassword);
+    res.redirect(routes.me);
+  } catch (err) {
+    res.status(400);
+    res.redirect(`/users${routes.changePassword}`);
+  }
+};

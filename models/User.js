@@ -6,9 +6,20 @@ const UserSchema = new mongoose.Schema({
   email: String,
   avatarUrl: String,
   kakaoId: Number,
-  githubId: Number
+  githubId: Number,
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ],
+  videos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Video'
+    }
+  ]
 });
-
 // passport-loacl-mongoose를 이용한 passport '전략' 설정
 UserSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 
