@@ -8,6 +8,13 @@ const totalTime = document.getElementById('totalTime');
 
 const volumeRange = document.getElementById('jsVolume');
 
+function registerView() {
+  const videoId = window.location.href.split('/videos/')[1];
+  fetch(`/api/${videoId}/view`, {
+    method: 'post'
+  });
+}
+
 function handlePlayClick() {
   if (videoPlayer.paused) {
     videoPlayer.play();
@@ -114,6 +121,7 @@ function init() {
   videoPlayer.addEventListener('loadedmetadata', setTotalTime);
   videoPlayer.addEventListener('timeupdate', getCurrentTime);
   videoPlayer.addEventListener('ended', handleEnded);
+  videoPlayer.addEventListener('ended', registerView);
   volumeRange.addEventListener('input', handleDrag);
 
   volumeBtn.addEventListener('mouseover', () => {

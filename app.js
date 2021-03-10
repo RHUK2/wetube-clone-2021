@@ -16,6 +16,7 @@ import videoRouter from './routers/videoRouter';
 import routes from './routes';
 // passport Config
 import './passport';
+import apiRouter from './routers/apiRouter';
 
 dotenv.config();
 
@@ -50,5 +51,6 @@ app.use(localMiddleware);
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter);
+app.use(routes.api, apiRouter);
 
 export default app;
