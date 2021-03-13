@@ -3,11 +3,16 @@
 
 import mongooses from 'mongoose';
 
-mongooses.connect(process.env.ATLAS_CONNECTION_KEY, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true
-});
+mongooses.connect(
+  process.env.PRODUCTION
+    ? process.env.ATLAS_CONNECTION_KEY
+    : process.env.MONGO_URL,
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+  }
+);
 
 const db = mongooses.connection;
 

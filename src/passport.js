@@ -18,7 +18,9 @@ passport.use(
     {
       clientID: process.env.GH_ID,
       clientSecret: process.env.GH_SECRET,
-      callbackURL: 'http://localhost:4000/auth/github/callback'
+      callbackURL: process.env.PRODUCTION
+        ? 'https://obscure-everglades-55462.herokuapp.com/auth/github/callback'
+        : 'http://localhost:4000/auth/github/callback'
     },
     githubLoginCallback
   )
@@ -29,7 +31,9 @@ passport.use(
     {
       clientID: process.env.KAKAO_ID,
       clientSecret: '',
-      callbackURL: 'http://localhost:4000/auth/kakao/callback'
+      callbackURL: process.env.PRODUCTION
+        ? 'https://obscure-everglades-55462.herokuapp.com/auth/kakao/callback'
+        : 'http://localhost:4000/auth/kakao/callback'
     },
     kakaoLoginCallback
   )
