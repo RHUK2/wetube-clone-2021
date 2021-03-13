@@ -40,7 +40,11 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: true,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL })
+    store: MongoStore.create({
+      mongoUrl: process.env.PRODUCTION
+        ? process.env.ATLAS_CONNECTION_KEY
+        : process.env.MONGO_URL
+    })
   })
 );
 // passport 초기화
