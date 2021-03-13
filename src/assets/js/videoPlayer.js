@@ -1,3 +1,5 @@
+import getBlobDuration from 'get-blob-duration';
+
 const videoContainer = document.getElementById('jsVideoPlayer');
 const videoPlayer = document.querySelector('#jsVideoPlayer video');
 const playBtn = document.getElementById('jsPlayButton');
@@ -90,8 +92,9 @@ const formatDate = seconds => {
   return `${hours}:${minutes}:${totalSeconds}`;
 };
 
-function setTotalTime() {
-  const totalTimeString = formatDate(videoPlayer.duration);
+async function setTotalTime() {
+  const duration = await getBlobDuration(videoPlayer.src);
+  const totalTimeString = formatDate(duration);
   totalTime.textContent = totalTimeString;
 }
 

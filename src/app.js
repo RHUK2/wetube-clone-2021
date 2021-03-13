@@ -1,3 +1,4 @@
+import path from 'path';
 // Server FrameWork
 import express from 'express';
 // Middleware
@@ -23,13 +24,13 @@ dotenv.config();
 const app = express();
 
 app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 app.use(
   helmet({
     contentSecurityPolicy: false
   })
 );
-app.use('/uploads', express.static('uploads'));
-app.use('/static', express.static('static'));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

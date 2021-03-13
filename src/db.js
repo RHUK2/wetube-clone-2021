@@ -3,7 +3,7 @@
 
 import mongooses from 'mongoose';
 
-mongooses.connect(process.env.MONGO_URL, {
+mongooses.connect(process.env.ATLAS_CONNECTION_KEY, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true
