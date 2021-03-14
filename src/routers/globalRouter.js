@@ -1,5 +1,4 @@
 import express from 'express';
-import passport from 'passport';
 import routes from '../routes';
 import {
   getJoin,
@@ -29,18 +28,10 @@ globalRouter.get(routes.logout, onlyPrivate, logout);
 globalRouter.get(routes.search, search);
 
 globalRouter.get(routes.github, githubLogin);
-globalRouter.get(
-  routes.githubCallback,
-  passport.authenticate('github', { failureRedirect: routes.login }),
-  postGithubLogIn
-);
+globalRouter.get(routes.githubCallback, githubLogin, postGithubLogIn);
 
 globalRouter.get(routes.kakao, kakaoLogin);
-globalRouter.get(
-  routes.kakaoCallback,
-  passport.authenticate('kakao', { failureRedirect: routes.login }),
-  postKakaoLogin
-);
+globalRouter.get(routes.kakaoCallback, kakaoLogin, postKakaoLogin);
 
 globalRouter.get(routes.me, getMe);
 

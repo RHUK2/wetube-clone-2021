@@ -1,5 +1,6 @@
 import path from 'path';
 // Server FrameWork
+import flash from 'express-flash';
 import express from 'express';
 // Middleware
 import dotenv from 'dotenv';
@@ -30,6 +31,7 @@ app.use(
     contentSecurityPolicy: false
   })
 );
+app.use(flash());
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(cookieParser());
 app.use(express.json());

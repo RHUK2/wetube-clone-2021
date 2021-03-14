@@ -93,8 +93,6 @@ export const deleteVideo = async (req, res) => {
     const video = await Video.findById(id);
     console.log(id);
     if (video.creator.toString() !== req.user.id) {
-      console.log(video.creator, req.user.id);
-      console.log(typeof video.creator, typeof req.user.id);
       throw Error();
     } else {
       await Video.findOneAndDelete({ _id: id });
