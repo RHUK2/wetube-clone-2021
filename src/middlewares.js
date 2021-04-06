@@ -35,7 +35,6 @@ export const localMiddleware = (req, res, next) => {
   res.locals.siteName = 'Wetube';
   res.locals.routes = routes;
   res.locals.loggedUser = req.user || null;
-  console.log(res.locals.messages);
   next();
 };
 

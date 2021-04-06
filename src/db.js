@@ -1,6 +1,3 @@
-// import dotenv from 'dotenv';
-// dotenv.config();
-
 import mongooses from 'mongoose';
 
 mongooses.connect(

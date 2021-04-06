@@ -5,7 +5,7 @@ html
     head
         title #{pageTitle} | #{siteName}
         link(rel="shortcut icon" href="#")
-        link(rel="stylesheet", href="/static/styles.css")
+        link(rel="stylesheet" href="/static/styles.css")
     body
         if messages.error
             //- .message.error
@@ -28,5 +28,5 @@ html
         main 
             block content
         include ../partials/footer 
-    script(src="/static/main.js")
-    script(src="https://kit.fontawesome.com/02aca41e50.js", crossorigin="anonymous")
+        script(src="/static/main.js")
+        script(src="https://kit.fontawesome.com/02aca41e50.js", crossorigin="anonymous")
