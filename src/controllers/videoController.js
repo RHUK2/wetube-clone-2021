@@ -32,15 +32,20 @@ export const postUpload = async (req, res) => {
     body: { title, description },
     file: { location }
   } = req;
-  const newVideo = await Video.create({
-    fileUrl: location,
-    title,
-    description,
-    creator: req.user.id
-  });
-  req.user.videos.push(newVideo.id);
-  await req.user.save();
-  res.redirect(routes.videoDetail(newVideo.id));
+  try {
+    const newVideo = await Video.create({
+      fileUrl: location,
+      title,
+      description,
+      creator: req.user.id
+    });
+    req.user.videos.push(newVideo.id);
+    req.user = await req.user.save();
+    res.redirect(routes.videoDetail(newVideo.id));
+  } catch (error) {
+    console.log(error);
+    res.redirect(`/videos${routes.upload}`);
+  }
 };
 export const videoDetail = async (req, res) => {
   const {
@@ -110,9 +115,9 @@ export const postRegisterView = async (req, res) => {
     params: { id }
   } = req;
   try {
-    const video = await Video.findById(id);
+    let video = await Video.findById(id);
     video.views += 1;
-    video.save();
+    video = await video.save();
     res.status(200);
   } catch (err) {
     res.status(400);
@@ -128,13 +133,13 @@ export const postAddComment = async (req, res) => {
     user
   } = req;
   try {
-    const video = await Video.findById(id);
+    let video = await Video.findById(id);
     const newComment = await Comment.create({
       text: comment,
       creator: user.id
     });
     video.comments.push(newComment._id);
-    video.save();
+    video = await video.save();
   } catch (err) {
     console.log(err);
     res.status(400);
